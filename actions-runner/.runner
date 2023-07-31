@@ -1,0 +1,9 @@
+﻿{
+  "agentId": 2,
+  "agentName": "Macintosh",
+  "poolId": 1,
+  "poolName": "Default",
+  "serverUrl": "https://pipelines.actions.githubusercontent.com/CCFl5ESI6ekG8H0PNE2W23IjM6tVfS6Bf0wB0G65SDKgHQllHm",
+  "gitHubUrl": "https://github.com/chengfeng12/ci-cd",
+  "workFolder": "_work"
+}
