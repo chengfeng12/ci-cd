@@ -1,0 +1,65 @@
+# 测试名称
+name: ESLint
+
+# 测试的触发器，即什么时间点执行测试
+on:
+  # 时间点1:在 main 和 dev 分支接收 push 时
+  push:
+    branches: [ "main", "dev" ]
+  # 时间点2:在 main 和 dev 分支接收 pull request 时
+  pull_request:
+    branches: [ "main", "dev" ]
+
+# 测试的任务
+jobs:
+  # 任务1:eslint
+  eslint:
+    # 任务名称
+    name: Run eslint scanning
+    # 任务运行环境，一般设置为 ubuntu-latest，即最新 TLS 版本的 Ubuntu
+    runs-on: ubuntu-latest
+    # 配置 Actions 执行权限，这里设置为只读取代码，写入安全事件，读取 Actions 运行状态
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    # 该任务的步骤
+    steps:
+      # 步骤1:检出代码
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 步骤2:安装前端程序所需要的依赖，还额外安装了向 GitHub 上传扫描结果的依赖（eslint-formatter-sarif）
+      - name: Install Dependencies
+        run: |
+          npm install
+          npm install @microsoft/eslint-formatter-sarif@2.1.7
+
+      # 步骤3:运行 eslint 扫描，将扫描结果输出到 eslint-results.sarif 文件中
+      # - name: Run ESLint
+      #   run: npx eslint src/
+      #     --config .eslintrc.js
+      #     --format @microsoft/eslint-formatter-sarif
+      #     --output-file eslint-results.sarif
+      #   continue-on-error: true
+
+      # 步骤4:上传扫描结果到 GitHub
+      - name: Upload analysis results to GitHub
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: eslint-results.sarif
+          wait-for-processing: true
+      
+      # 步骤5:测试编译，这一步可以检查代码是否能够正常编译（有时候，代码可以通过 eslint 扫描，但是无法正常编译，通过这一步检查出错误）
+      - name: Test build
+        run: |
+          npm run build
+      # 步骤 部署工作
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{secrets.ACTIONS_DEPLOY_KEY}}
+          publish_branch: gh-pages
+          publish_dir: ./root
+          force_orphan: true
+
