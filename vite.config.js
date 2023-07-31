@@ -8,7 +8,7 @@ export default (configEnv) => {
   const { VITE_PUBLIC_PATH } = viteEnv
   return {
     /** 打包时根据实际情况修改 base */
-    base: './',
+    // base: './',
     /** Vite 插件 */
     plugins: [
       vue(),
