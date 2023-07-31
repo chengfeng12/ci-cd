@@ -44,28 +44,35 @@ jobs:
       #   continue-on-error: true
 
       # 步骤4:上传扫描结果到 GitHub
-      - name: Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: eslint-results.sarif
-          wait-for-processing: true
+      # - name: Upload analysis results to GitHub
+      #   uses: github/codeql-action/upload-sarif@v2
+      #   with:
+      #     sarif_file: eslint-results.sarif
+      #     wait-for-processing: true
       
       # 步骤5:测试编译，这一步可以检查代码是否能够正常编译（有时候，代码可以通过 eslint 扫描，但是无法正常编译，通过这一步检查出错误）
       - name: Test build
         run: |
           npm run build
       # 步骤 部署工作
-      # - name: Deploy
-      #   uses: peaceiris/actions-gh-pages@v3
-      #   with:
-      #     deploy_key: ${{secrets.ACTIONS_DEPLOY_KEY}}
-      #     publish_branch: gh-pages
-      #     publish_dir: ./docs
-      #     force_orphan: true
-      - name: Copy files to Pages directory
-        run: |
-          # 将打包后的文件复制到 "pages" 目录中
-          # 注意替换 "<source-dir>" 为实际打包后的目录名
-          rm -rf ./docs/
-          cp -r ./docs/_site/* ./docs/
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{secrets.ACTIONS_DEPLOY_KEY}}
+          publish_branch: gh-pages
+          publish_dir: ./docs
+          force_orphan: true
 
+
+      # - name: Copy files to Pages directory
+      #   run: |
+      #     # 将打包后的文件复制到 "pages" 目录中
+      #     # 注意替换 "<source-dir>" 为实际打包后的目录名
+          # rm -rf ./docs/
+          # mkdir -p docs
+          # cp -r ./docs/_site/* ./docs/
+
+
+      # with:
+      #     source: ./
+      #     destination: ./_site
