@@ -66,6 +66,6 @@ jobs:
         run: |
           # 将打包后的文件复制到 "pages" 目录中
           # 注意替换 "<source-dir>" 为实际打包后的目录名
-          rm -rf docs/
-          cp -r <source-dir>/* docs/
+          rm -rf ./docs/
+          cp -r ./docs/_site/* ./docs/
 
