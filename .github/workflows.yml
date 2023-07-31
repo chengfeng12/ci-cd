@@ -55,11 +55,17 @@ jobs:
         run: |
           npm run build
       # 步骤 部署工作
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          deploy_key: ${{secrets.ACTIONS_DEPLOY_KEY}}
-          publish_branch: gh-pages
-          publish_dir: ./docs
-          force_orphan: true
+      # - name: Deploy
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     deploy_key: ${{secrets.ACTIONS_DEPLOY_KEY}}
+      #     publish_branch: gh-pages
+      #     publish_dir: ./docs
+      #     force_orphan: true
+      - name: Copy files to Pages directory
+        run: |
+          # 将打包后的文件复制到 "pages" 目录中
+          # 注意替换 "<source-dir>" 为实际打包后的目录名
+          rm -rf docs/
+          cp -r <source-dir>/* docs/
 
