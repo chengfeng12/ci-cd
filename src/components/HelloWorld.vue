@@ -5,7 +5,7 @@ defineProps({
   msg: String,
 })
 
-const count = ref(1)
+const count = ref(10)
 </script>
 
 <template>
