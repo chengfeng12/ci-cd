@@ -12,10 +12,10 @@ on:
 
 # 测试的任务
 jobs:
-  # 任务1:eslint
-  eslint:
+  # 任务1:build
+  build:
     # 任务名称
-    name: Run eslint scanning
+    name: Run build scanning
     # 任务运行环境，一般设置为 ubuntu-latest，即最新 TLS 版本的 Ubuntu
     runs-on: ubuntu-latest
     # 配置 Actions 执行权限，这里设置为只读取代码，写入安全事件，读取 Actions 运行状态

@@ -9,6 +9,9 @@ export default (configEnv) => {
   return {
     /** 打包时根据实际情况修改 base */
     base: './',
+    build: {
+      outDir: 'docs'
+    },
     /** Vite 插件 */
     plugins: [
       vue(),
